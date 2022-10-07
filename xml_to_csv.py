@@ -30,18 +30,19 @@ args = parser.parse_args()
 def xml_to_csv(path):
     xml_list = []
     for xml_file in glob.glob(path + '/*.xml'):
+        print("Parsing file:",xml_file)
         tree = ET.parse(xml_file)
         root = tree.getroot()
         for member in root.findall('object'):
             value = (
                 root.find('filename').text,
-                int(root.find('size')[0].text),
-                int(root.find('size')[1].text),
-                member[0].text,
-                int(member[5][0].text),
-                int(member[5][1].text),
-                int(member[5][2].text),
-                int(member[5][3].text)
+                int(root.find('size').find('width').text),
+                int(root.find('height').text),
+                member.find('name').text,
+                int(member.find('bndbox').find('xmin').text),
+                int(member.find('bndbox').find('ymin').text),
+                int(member.find('bndbox').find('xmax').text),
+                int(member.find('bndbox').find('ymax').text)
             )
             xml_list.append(value)
     column_name = ['filename', 'width', 'height', 'class',
