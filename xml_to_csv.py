@@ -37,7 +37,7 @@ def xml_to_csv(path):
             value = (
                 root.find('filename').text,
                 int(root.find('size').find('width').text),
-                int(root.find('height').text),
+                int(root.find('size').find('height').text),
                 member.find('name').text,
                 int(member.find('bndbox').find('xmin').text),
                 int(member.find('bndbox').find('ymin').text),
